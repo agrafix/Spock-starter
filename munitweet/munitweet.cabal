@@ -1,0 +1,45 @@
+name:                munitweet
+version:             0.1.0.0
+synopsis:            Basic twitter clone
+description:         Simple twitter clone for learning web programming in Haskell
+homepage:            https://github.com/agrafix/munitweet
+license:             BSD3
+author:              Alexander Thiemann <at@thitp.de>
+maintainer:          Alexander Thiemann <at@thitp.de>
+copyright:           (c) 2016 Alexander Thiemann
+build-type:          Simple
+cabal-version:       >=1.10
+
+executable munitweet-server
+  hs-source-dirs: app
+  main-is: Main.hs
+  default-language: Haskell2010
+  ghc-options: -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+                base >=4.6 && < 5,
+                munitweet
+
+library
+  exposed-modules:
+                  MT.Server
+  other-modules:
+                MT.Types
+              , MT.Model
+  build-depends:
+                base >= 4.6 && < 5,
+                mtl,
+                Spock >=0.11,
+                text,
+                bytestring,
+                persistent >=2.1,
+                persistent-sqlite >=2.1,
+                persistent-template >=2.1,
+                monad-logger,
+                time
+  hs-source-dirs: lib
+  default-language: Haskell2010
+  ghc-options: -Wall
+
+source-repository git
+  type: git
+  location: ssh://git@github.com:agrafix/Spock-starter
