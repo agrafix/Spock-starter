@@ -5,6 +5,7 @@ where
 
 import MT.Model
 import MT.Types
+import MT.Views.Site
 
 import Web.Spock
 import Web.Spock.Config
@@ -14,6 +15,7 @@ import Control.Monad.Logger
 import Control.Monad.Trans
 import Data.IORef
 import Data.Monoid
+import Network.Wai.Middleware.Static
 import qualified Data.Text as T
 
 launchServer :: Int -> IO ()
@@ -27,8 +29,10 @@ launchServer port =
 
 app :: AppM ()
 app =
-    do get root $ text "Hello World!"
+    do middleware (staticPolicy (addBase "static"))
+       get root $ text "Hello World!"
        get ("hello" <//> var) helloEndpoint
+       get "html" (blaze siteView)
 
 helloEndpoint :: T.Text -> HandlerM ()
 helloEndpoint name =
